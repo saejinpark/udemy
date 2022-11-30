@@ -3,8 +3,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
-const Joi = require("joi");
 
+const { campgroundSchema } = require("./schemas.js");
 const Campground = require("./models/campground");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -59,7 +59,12 @@ app.post(
   "/campgrounds",
   validateCampground,
   catchAsync(async (req, res, next) => {
-    const campgroundSchema = Joi.object(Campground)
+    const result = campgroundSchema.validate(req.body);
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+      const msg = error.details.map((el) => el.message).join(",");
+      throw new ExpressError(msg, 400);
+    }
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
