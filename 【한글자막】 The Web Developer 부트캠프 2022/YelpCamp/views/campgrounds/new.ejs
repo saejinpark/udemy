@@ -2,33 +2,48 @@
 <div class="row">
   <h1 class="text-center">New Campground</h1>
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST">
+    <form class="validated-form" action="/campgrounds" method="POST"
+      novalidate>
       <fieldset class="mb-3">
         <label class="form-label" for="title">title</label>
         <input class="form-control" type="text" name="campground[title]"
-          id="title" placeholder="title" />
+          id="title" placeholder="title" required/>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </fieldset>
       <fieldset class="mb-3">
         <label class="form-label" for="location">location</label>
         <input class="form-control" type="text" name="campground[location]"
-          id="location" placeholder="locaiton" />
+          id="location" placeholder="locaiton" required/>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </fieldset>
       <fieldset class="mb-3">
         <label class="form-label" for="image">image Url</label>
         <input class="form-control" type="text" name="campground[image]"
-          id="image" placeholder="image Url" />
+          id="image" placeholder="image Url" required/>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </fieldset>
       <fieldset class="mb-3">
         <label class="form-label" for="price">Campground Price</label>
         <div class="input-group">
           <span class="input-group-text" id="price-label">$</span>
           <input class="form-control" type="text" name="campground[price]"
-            id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label"/>
+            id="price" placeholder="0.00" aria-label="price"
+            aria-describedby="price-label" required/>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
       </fieldset>
       <fieldset class="mb-3">
         <label class="form-label" for="description">Description</label>
-        <textarea name="campground[description]" id="description" class="form-control"></textarea>
+        <textarea name="campground[description]" id="description"
+          class="form-control" required></textarea>
       </fieldset>
       <fieldset class="mb-3">
         <button class="btn btn-success" type="submit">Add Campground</button>
@@ -36,3 +51,25 @@
     </form>
   </div>
 </div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.validated-form')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
