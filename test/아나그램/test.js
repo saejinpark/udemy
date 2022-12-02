@@ -8,14 +8,12 @@ function validAnagram(str1, str2) {
     return false;
   }
   const str1Obj = {};
-  const str2Obj = {};
   for (let i = 0; i < str1.length; i++) {
     addObject(str1Obj, str1[i]);
-    addObject(str2Obj, str2[i]);
   }
-  for (let char of str1) {
-    if (!str2Obj[char]) return false;
-    if (str1Obj[char] !== str2Obj[char]) return false;
+  for (let char of str2) {
+    if (!str1Obj[char]) return false;
+    str1Obj[char]--;
   }
   return true;
 }
